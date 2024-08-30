@@ -12,6 +12,9 @@ export class HomePage {
   user = {
     username: '',
     password: '',
+    nombre: '',
+    apellido:'',
+    fdn:''
   };
   /* mensaje de respuesta */
   mensaje = '';
@@ -78,3 +81,4 @@ export class HomePage {
     }
   }
 }
+

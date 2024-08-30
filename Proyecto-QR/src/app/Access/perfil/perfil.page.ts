@@ -13,6 +13,9 @@ export class PerfilPage implements OnInit {
     const state = navegacion?.extras.state as {
       username: '';
       password: '';
+      nombre: '';
+      apellido:'';
+      fdn:''
     };
     this.username = state.username;
     //Console.log
