@@ -8,18 +8,30 @@ import { Router } from '@angular/router';
 })
 export class PerfilPage implements OnInit {
   username = '';
+  nombre = '';
+  apellido = '';
+  nivelEducacion = '';
+  fechaNacimiento = '';
+
   constructor(private router: Router) {
-    const navegacion = this.router.getCurrentNavigation();
-    const state = navegacion?.extras.state as {
-      username: '';
-      password: '';
-      nombre: '';
-      apellido:'';
-      fdn:''
+    // Obtener el estado de la navegación
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state as {
+      username: string;
+      nombre: string;
+      apellido: string;
+      nivelEducacion: string;
+      fechaNacimiento: string;
     };
-    this.username = state.username;
-    //Console.log
-    //Mensaje bienvenida
+
+    if (state) {
+      // Asignar valores a las propiedades del componente
+      this.username = state.username;
+      this.nombre = state.nombre;
+      this.apellido = state.apellido;
+      this.nivelEducacion = state.nivelEducacion;
+      this.fechaNacimiento = state.fechaNacimiento;
+    }
   }
 
   ngOnInit() {}

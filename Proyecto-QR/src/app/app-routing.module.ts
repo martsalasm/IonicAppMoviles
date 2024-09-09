@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { UserManagementComponent } from './user-management/user-management.component';
+
 
 const routes: Routes = [
   {
@@ -19,6 +21,13 @@ const routes: Routes = [
     path: 'perfil',
     loadChildren: () => import('./Access/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
+  {
+    path: 'recuperar-password',
+    loadChildren: () => import('./recuperar/recuperar.module').then( m => m.RecuperarPageModule)
+  },
+  { path: 'user-management', component: UserManagementComponent },
+
+
 ];
 
 @NgModule({
