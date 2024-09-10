@@ -1,0 +1,14 @@
+/* register.page.scss */
+ion-modal {
+    --width: 80%;
+    --height: 60%;
+    --max-height: 400px; /* Ajusta la altura máxima si es necesario */
+    --padding: 0;
+    --border-radius: 16px; /* Opcional: para bordes redondeados */
+    --box-shadow: 0 0 10px rgba(192, 181, 181, 0.2); /* Opcional: para sombra */
+  }
+  
+  ion-datetime {
+    --min-height: 200px; /* Ajusta la altura si es necesario */
+  }
+  

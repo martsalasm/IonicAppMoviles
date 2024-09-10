@@ -1,0 +1,68 @@
+
+
+  /* perfil.page.scss */
+
+/* Asegura que el contenido del perfil se ajuste al tamaño de pantalla */
+ion-content {
+  --background: var(--ion-background-color);
+}
+
+/* Estilo para el encabezado del perfil */
+ion-header {
+  --background: var(--ion-toolbar-background);
+}
+
+/* Estilo para el título del perfil */
+ion-toolbar {
+  --color: var(--ion-text-color);
+}
+
+ion-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Estilo para la tarjeta del perfil */
+ion-card {
+  margin: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el encabezado de la tarjeta */
+ion-card-header {
+  --background: var(--ion-card-header-background);
+}
+
+/* Estilo para el contenido de la tarjeta */
+ion-card-content {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--ion-text-color);
+}
+
+p {
+  margin: 8px 0;
+}
+
+/* Estilo para los elementos en la tarjeta */
+ion-card-content p {
+  display: flex;
+  justify-content: space-between;
+  font-weight: normal;
+}
+
+strong {
+  font-weight: bold;
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 767px) {
+  ion-card-content {
+    font-size: 0.9rem;
+  }
+
+  ion-title {
+    font-size: 1.2rem;
+  }
+}
