@@ -43,12 +43,15 @@
               <ion-select-option value="Superior">Educación Superior</ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item (click)="openDateTimePicker()">
+
+          <!-- Input for date that triggers modal -->
+          <ion-item (click)="showDateTime = true">
             <ion-label position="stacked">Fecha de Nacimiento</ion-label>
-            <ion-input [(ngModel)]="fechaNacimiento" readonly placeholder="Selecciona tu fecha">
+            <ion-input [value]="fechaNacimiento | date:'dd/MM/yyyy'" readonly placeholder="Selecciona tu fecha">
               <ion-icon slot="end" name="calendar"></ion-icon>
             </ion-input>
           </ion-item>
+
           <ion-item>
             <ion-label position="stacked">Contraseña</ion-label>
             <ion-input [(ngModel)]="password" type="password" placeholder="Ingresa tu contraseña"></ion-input>
@@ -56,13 +59,13 @@
         </ion-list>
 
         <!-- Modal for DateTime Picker -->
-        <ion-modal [isOpen]="showDateTime" (ionModalDidDismiss)="closeDateTimePicker()">
+        <ion-modal [isOpen]="showDateTime" (ionModalDidDismiss)="showDateTime = false">
           <ng-template>
             <ion-header>
               <ion-toolbar>
                 <ion-title>Selecciona una Fecha</ion-title>
                 <ion-buttons slot="end">
-                  <ion-button (click)="closeDateTimePicker()">Cerrar</ion-button>
+                  <ion-button (click)="showDateTime = false">Cerrar</ion-button>
                 </ion-buttons>
               </ion-toolbar>
             </ion-header>
@@ -78,4 +81,3 @@
     </ion-card>
   </div>
 </ion-content>
-

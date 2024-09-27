@@ -1,0 +1,19 @@
+ion-content {
+    --background: var(--ion-color-light);
+  }
+  
+  h2 {
+    color: var(--ion-color-danger);
+    font-size: 2rem;
+    margin-top: 20px;
+  }
+  
+  p {
+    color: var(--ion-color-dark);
+    margin-bottom: 20px;
+  }
+  
+  ion-button {
+    --background: var(--ion-color-primary);
+  }
+  

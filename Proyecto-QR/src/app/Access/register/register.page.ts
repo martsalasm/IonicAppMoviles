@@ -11,10 +11,10 @@ export class RegisterPage {
   nombre = '';
   apellido = '';
   nivelEducacion = '';
-  fechaNacimiento: string = ''; // Fecha de nacimiento
+  fechaNacimiento: string = ''; // Fecha de nacimiento en formato ISO
   password = '';
   mensaje = '';
-  showDateTime = false; // Variable para controlar la visibilidad del selector de fecha
+  showDateTime = false; // Variable para controlar la visibilidad del modal de fecha
 
   constructor(private router: Router) {}
 
@@ -63,18 +63,8 @@ export class RegisterPage {
     return true;
   }
 
-  openDateTimePicker() {
-    this.showDateTime = true;
-  }
-
-  closeDateTimePicker() {
-    this.showDateTime = false;
-  }
-
+  // Ya no necesitas los métodos de apertura/cierre del modal
   onDateChange(event: any) {
-    const date = new Date(event.detail.value);
-    this.fechaNacimiento = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-    this.closeDateTimePicker(); // Ocultar el selector después de seleccionar la fecha
+    this.fechaNacimiento = event.detail.value; // Almacena la fecha en formato ISO
   }
 }
-

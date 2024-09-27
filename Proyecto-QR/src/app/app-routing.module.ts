@@ -26,6 +26,13 @@ const routes: Routes = [
     loadChildren: () => import('./recuperar/recuperar.module').then( m => m.RecuperarPageModule)
   },
   { path: 'user-management', component: UserManagementComponent },
+  {
+    path: 'page-not-found',
+    loadChildren: () => import('./page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule)
+  },
+  {
+    path: '**', redirectTo: 'page-not-found'  // Redirige a la página 404
+  }
 
 
 ];
