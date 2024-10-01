@@ -3,7 +3,6 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-
     <ion-title>Gestión de Usuarios</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -15,7 +14,7 @@
     </ion-card-header>
 
     <ion-card-content>
-      <ion-list>
+      <ion-list *ngIf="users && users.length > 0; else noUsers">
         <ion-item *ngFor="let user of users">
           <ion-label>
             {{ user.usuario }} - {{ user.nombre }} {{ user.apellido }}
@@ -25,6 +24,13 @@
           </ion-button>
         </ion-item>
       </ion-list>
+
+      <!-- Display if no users exist -->
+      <ng-template #noUsers>
+        <ion-item>
+          <ion-label>No hay usuarios registrados.</ion-label>
+        </ion-item>
+      </ng-template>
     </ion-card-content>
   </ion-card>
 </ion-content>
