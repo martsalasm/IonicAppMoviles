@@ -20,6 +20,7 @@ export class UserManagementComponent implements OnInit {
   async loadUsers() {
     try {
       this.users = await this.sqliteService.getUsers();
+      console.log('Loaded users:', this.users);
     } catch (e) {
       console.error('Error loading users:', e);
     }
