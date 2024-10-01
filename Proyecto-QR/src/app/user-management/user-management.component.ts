@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../user.service';
+import { SQLiteService } from '../sqlite.service';
 
 @Component({
   selector: 'app-user-management',
@@ -9,18 +9,28 @@ import { UserService } from '../user.service';
 export class UserManagementComponent implements OnInit {
   users: any[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private sqliteService: SQLiteService) {}
 
   ngOnInit() {
-    this.loadUsers();
+    this.sqliteService.initializeDatabase()
+      .then(() => this.loadUsers())
+      .catch(e => console.error('Error initializing database:', e));
   }
 
-  loadUsers() {
-    this.users = this.userService.getUsers();
+  async loadUsers() {
+    try {
+      this.users = await this.sqliteService.getUsers();
+    } catch (e) {
+      console.error('Error loading users:', e);
+    }
   }
 
-  deleteUser(username: string) {
-    this.userService.deleteUser(username);
-    this.loadUsers(); // Volver a cargar los usuarios después de eliminar uno
+  async deleteUser(usuario: string) {
+    try {
+      await this.sqliteService.deleteUser(usuario);
+      this.loadUsers();
+    } catch (e) {
+      console.error('Error deleting user:', e);
+    }
   }
 }
