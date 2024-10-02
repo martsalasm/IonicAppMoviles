@@ -29,9 +29,12 @@ export class SQLiteService {
   async initSQLite() {
     try {
       const dbName = 'user_management_db';
-      this.db = await this.sqlite.createConnection(dbName, false, 'no-encryption', 1, false);
-      await this.db.open();
-      await this.createTable();
+      // Abre la conexión solo si no está ya abierta
+      if (!this.db) {
+        this.db = await this.sqlite.createConnection(dbName, false, 'no-encryption', 1, false);
+        await this.db.open();
+        await this.createTable();
+      }
     } catch (e) {
       console.error('Error initializing SQLite database:', e);
     }
