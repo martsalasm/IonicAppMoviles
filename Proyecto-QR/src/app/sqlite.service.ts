@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SQLiteConnection, SQLiteDBConnection } from '@capacitor-community/sqlite';
 import { CapacitorSQLite } from '@capacitor-community/sqlite';
 import { Capacitor } from '@capacitor/core';
-import { Preferences } from '@capacitor/preferences';  // Capacitor Preferences as fallback
+import { Storage } from '@capacitor/storage';  // Using Capacitor Storage for web fallback
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +20,8 @@ export class SQLiteService {
       // Use SQLite if the platform is native
       await this.initSQLite();
     } else {
-      // Use local storage (or IndexedDB) in the browser
-      console.warn('Using Preferences for browser storage');
+      // Use Capacitor Storage (which uses IndexedDB) for browser storage
+      console.warn('Using Capacitor Storage for browser storage');
     }
   }
 
@@ -56,7 +56,7 @@ export class SQLiteService {
     }
   }
 
-  // Add a user to SQLite (native) or Preferences (web)
+  // Add a user to SQLite (native) or Storage (web)
   async addUser(user: { usuario: string; nombre: string; apellido: string }) {
     if (Capacitor.isNativePlatform()) {
       const query = `
@@ -69,16 +69,16 @@ export class SQLiteService {
         console.error('Error adding user to SQLite:', e);
       }
     } else {
-      // Use Preferences for web (LocalStorage or IndexedDB could also be used here)
-      await Preferences.set({
+      // Use Capacitor Storage for web (IndexedDB)
+      await Storage.set({
         key: user.usuario,
         value: JSON.stringify(user),
       });
-      console.log('User added to Preferences (web)');
+      console.log('User added to Capacitor Storage (web)');
     }
   }
 
-  // Get users from SQLite (native) or Preferences (web)
+  // Get users from SQLite (native) or Storage (web)
   async getUsers() {
     if (Capacitor.isNativePlatform()) {
       const query = `SELECT * FROM users;`;
@@ -90,10 +90,10 @@ export class SQLiteService {
         return [];
       }
     } else {
-      const { keys } = await Preferences.keys();
+      const { keys } = await Storage.keys();
       const users = [];
       for (const key of keys) {
-        const { value } = await Preferences.get({ key });
+        const { value } = await Storage.get({ key });
         if (value) {
           users.push(JSON.parse(value));
         }
@@ -102,7 +102,7 @@ export class SQLiteService {
     }
   }
 
-  // Delete a user from SQLite (native) or Preferences (web)
+  // Delete a user from SQLite (native) or Storage (web)
   async deleteUser(usuario: string) {
     if (Capacitor.isNativePlatform()) {
       const query = `DELETE FROM users WHERE usuario = ?;`;
@@ -113,8 +113,8 @@ export class SQLiteService {
         console.error('Error deleting user from SQLite:', e);
       }
     } else {
-      await Preferences.remove({ key: usuario });
-      console.log('User deleted from Preferences (web)');
+      await Storage.remove({ key: usuario });
+      console.log('User deleted from Capacitor Storage (web)');
     }
   }
 }
