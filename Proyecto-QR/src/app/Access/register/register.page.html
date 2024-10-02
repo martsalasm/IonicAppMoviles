@@ -44,39 +44,23 @@
             </ion-select>
           </ion-item>
 
-          <!-- Input for date that triggers modal -->
-          <ion-item (click)="showDateTime = true">
+          <ion-item>
             <ion-label position="stacked">Fecha de Nacimiento</ion-label>
-            <ion-input [value]="fechaNacimiento | date:'dd/MM/yyyy'" readonly placeholder="Selecciona tu fecha">
-              <ion-icon slot="end" name="calendar"></ion-icon>
-            </ion-input>
+            <mat-form-field appearance="outline" style="width: 100%; margin-top: 10px;">
+              <mat-label>Fecha de Nacimiento</mat-label>
+              <input matInput [matDatepicker]="picker" [(ngModel)]="fechaNacimiento" placeholder="Selecciona tu fecha de nacimiento">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
           </ion-item>
 
-          <ion-item>
+          <ion-item >
             <ion-label position="stacked">Contraseña</ion-label>
             <ion-input [(ngModel)]="password" type="password" placeholder="Ingresa tu contraseña"></ion-input>
           </ion-item>
         </ion-list>
-
-        <!-- Modal for DateTime Picker -->
-        <ion-modal [isOpen]="showDateTime" (ionModalDidDismiss)="showDateTime = false">
-          <ng-template>
-            <ion-header>
-              <ion-toolbar>
-                <ion-title>Selecciona una Fecha</ion-title>
-                <ion-buttons slot="end">
-                  <ion-button (click)="showDateTime = false">Cerrar</ion-button>
-                </ion-buttons>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content>
-              <ion-datetime [(ngModel)]="fechaNacimiento" presentation="date" (ionChange)="onDateChange($event)"></ion-datetime>
-            </ion-content>
-          </ng-template>
-        </ion-modal>
-
         <ion-button expand="full" (click)="register()">Registrar</ion-button>
-        <ion-label *ngIf="mensaje" color="danger">{{ mensaje }}</ion-label>        
+        <ion-label *ngIf="mensaje" color="danger">{{ mensaje }}</ion-label>
       </ion-card-content>
     </ion-card>
   </div>
