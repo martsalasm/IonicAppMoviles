@@ -59,11 +59,11 @@ export class HomePage {
                   let navigationExtras: NavigationExtras = {
                       state: {
                           user: {
-                            usuario: response.usuario.usuario,
-                            nombre: response.usuario.nombre,
-                            apellido: response.usuario.apellido,
-                            nivelEducacion: response.usuario.nivelEducacion,
-                            fechaNacimiento: response.usuario.fechaNacimiento,
+                            usuario: response.usuario, // Aquí estás accediendo directamente al valor
+                            nombre: response.nombre,
+                            apellido: response.apellido,
+                            nivelEducacion: response.nivelEducacion,
+                            fechaNacimiento: response.fechaNacimiento,
                           }
                       }
                   };

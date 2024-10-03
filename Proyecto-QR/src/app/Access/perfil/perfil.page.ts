@@ -33,6 +33,7 @@ export class PerfilComponent implements OnInit {
     const state = navigation?.extras.state;
     
     if (state && state['user']) {
+      console.log('Datos del usuario recibidos:', state['user']); // Para depuración
       const user = state['user'];
 
       this.username = user.usuario; // Asignamos correctamente las propiedades
