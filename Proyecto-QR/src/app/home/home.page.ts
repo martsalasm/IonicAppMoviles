@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AnimationController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -44,14 +45,14 @@ export class HomePage {
     const complexPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[.,\-!])[a-zA-Z0-9.,\-!]*$/;
 
     if (this.user.username.length > 0) {
-        if (this.user.password.length >= 8 && complexPattern.test(this.user.password)) {
-            // Muestra el spinner antes de llamar a la API
-            this.cambiarSpinner();
+      if (this.user.password.length >= 8 && complexPattern.test(this.user.password)) {
+          // Muestra el spinner antes de llamar a la API
+          this.cambiarSpinner();
 
-            // Aquí puedes hacer la llamada a la API
-            this.http.post('http://localhost:3000/api/login', {
-              usuario: this.user.username,
-              contrasena: this.user.password
+          // LLamada a la api para login
+          this.http.post('http://localhost:3000/api/login', {
+            usuario: this.user.username.toLowerCase(), // Normaliza a minúsculas
+            contrasena: this.user.password
           }).subscribe({
               next: (response: any) => {
                   console.log('Respuesta de la API:', response); // Verifica la estructura de la respuesta
@@ -78,14 +79,13 @@ export class HomePage {
                   this.cambiarSpinner(); // Detiene el spinner
               }
           });
-        } else {
-            this.mensaje = 'Su contraseña debe tener un largo de 8 caracteres y contener al menos 1 número, 1 letra y 1 símbolo';
-        }
+      } else {
+          this.mensaje = 'Su contraseña debe tener un largo de 8 caracteres y contener al menos 1 número, 1 letra y 1 símbolo';
+      }
     } else {
         this.mensaje = 'Usuario vacío';
     }
-}
-
+  }
 
   togglePassword() {
     this.showPassword = !this.showPassword;

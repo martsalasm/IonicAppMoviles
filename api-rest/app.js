@@ -120,7 +120,7 @@ app.post("/api/login", (req, res) => {
                 .json({ message: "Usuario o contraseña incorrectos" });
         }
         res.json({ message: "Inicio de sesión exitoso", 
-            usuario: row.usuario, // Asegúrate de que estas propiedades existan
+            usuario: row.usuario, 
             nombre: row.nombre,
             apellido: row.apellido,
             nivelEducacion: row.nivelEducacion,

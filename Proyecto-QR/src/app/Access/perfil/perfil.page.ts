@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+//Mantener palabras palabras capitalizadas
+const capitalize = (str: string) => {
+  if (!str) return str; // Handle empty strings
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
 
 interface User {
   usuario: string;
@@ -36,9 +41,9 @@ export class PerfilComponent implements OnInit {
       console.log('Datos del usuario recibidos:', state['user']); // Para depuración
       const user = state['user'];
 
-      this.username = user.usuario; // Asignamos correctamente las propiedades
-      this.nombre = user.nombre;
-      this.apellido = user.apellido;
+      this.username = capitalize(user.usuario); // Asignamos correctamente las propiedades
+      this.nombre = capitalize(user.nombre);
+      this.apellido = capitalize(user.apellido);
       this.nivelEducacion = user.nivelEducacion;
 
       // Convertir la fecha a string (formato: 'YYYY-MM-DD') antes de asignarla
