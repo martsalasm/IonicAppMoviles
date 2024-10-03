@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../user.service'; // Asegúrate de que la ruta sea correcta
+import { AlertController } from '@ionic/angular'; // Importa el AlertController
 
 @Component({
     selector: 'app-register',
@@ -16,9 +17,29 @@ export class RegisterPage {
     mensaje: string = '';
     isSuccess: boolean = false; // Propiedad para controlar el estado del mensaje
 
-    constructor(private userService: UserService) {}
+    constructor(private userService: UserService, private alertController: AlertController) {} // Inyecta el AlertController
 
-    register() {
+    async showAlert(message: string) {
+        const alert = await this.alertController.create({
+            header: 'Advertencia',
+            message: message,
+            buttons: ['OK'],
+        });
+        await alert.present();
+    }
+
+    async register() {
+        // Reinicia el mensaje de éxito antes de validar
+        this.mensaje = ''; // Limpia el mensaje anterior
+        this.isSuccess = false; // Resetea el estado de éxito
+
+        // Verificar que todos los campos estén llenos
+        if (!this.usuario || !this.nombre || !this.apellido || !this.nivelEducacion || !this.fechaNacimiento || !this.password) {
+            await this.showAlert('Todos los campos son obligatorios.'); // Muestra la alerta
+            return; // Detiene la ejecución si hay campos vacíos
+        }
+
+        // Crea un objeto de usuario con todos los campos requeridos
         const user = {
             usuario: this.usuario,
             nombre: this.nombre,
@@ -27,13 +48,15 @@ export class RegisterPage {
             fechaNacimiento: this.fechaNacimiento,
             contrasena: this.password,
         };
-        console.log('Datos a registrar:', user);
+        console.log('Datos a registrar:', user); // Para depuración
+
+        // Llama al método registerUser del servicio UserService
         this.userService.registerUser(user).subscribe({
             next: (response) => {
                 console.log('Usuario registrado', response);
                 this.mensaje = 'Usuario registrado con éxito';
                 this.isSuccess = true; // Indica que la operación fue exitosa
-                this.clearForm();
+                this.clearForm(); // Opcional: limpiar el formulario
             },
             error: (error) => {
                 console.error('Error registrando el usuario', error);
@@ -44,6 +67,7 @@ export class RegisterPage {
     }
 
     clearForm() {
+        // Limpiar los campos del formulario después del registro
         this.usuario = '';
         this.nombre = '';
         this.apellido = '';

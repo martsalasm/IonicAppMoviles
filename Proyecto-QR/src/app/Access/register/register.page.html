@@ -23,15 +23,15 @@
         <ion-list>
           <ion-item>
             <ion-label position="stacked">Nombre de Usuario</ion-label>
-            <ion-input type="text" [(ngModel)]="usuario" placeholder="Ingresa tu nombre de usuario"></ion-input>
+            <ion-input type="text" [(ngModel)]="usuario" placeholder="Ingresa tu nombre de usuario" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Nombre</ion-label>
-            <ion-input type="text" [(ngModel)]="nombre" placeholder="Ingresa tu nombre"></ion-input>
+            <ion-input type="text" [(ngModel)]="nombre" placeholder="Ingresa tu nombre" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Apellido</ion-label>
-            <ion-input [(ngModel)]="apellido" type="text" placeholder="Ingresa tu apellido"></ion-input>
+            <ion-input [(ngModel)]="apellido" type="text" placeholder="Ingresa tu apellido" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Nivel de Educación</ion-label>
@@ -45,11 +45,11 @@
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Fecha de Nacimiento</ion-label>
-            <ion-input [(ngModel)]="fechaNacimiento" type="date" placeholder="Selecciona tu fecha de nacimiento"></ion-input>
+            <ion-input [(ngModel)]="fechaNacimiento" type="date" placeholder="Selecciona tu fecha de nacimiento" required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Contraseña</ion-label>
-            <ion-input [(ngModel)]="password" type="password" placeholder="Ingresa tu contraseña"></ion-input>
+            <ion-input [(ngModel)]="password" type="password" placeholder="Ingresa tu contraseña" required></ion-input>
           </ion-item>
         </ion-list>
         <ion-button expand="full" (click)="register()">Registrar</ion-button>
