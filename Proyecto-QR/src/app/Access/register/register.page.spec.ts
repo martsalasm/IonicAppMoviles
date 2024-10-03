@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { SQLiteService } from '../../sqlite.service';
 import { UserService } from '../../user.service'; // Asegúrate de importar UserService
 import { Capacitor } from '@capacitor/core'; // Importa Capacitor
 
@@ -17,8 +16,8 @@ export class RegisterPage {
   password: string = '';
   mensaje: string = '';
   showDateTime: boolean = false;
-
-  constructor(private sqliteService: SQLiteService, private userService: UserService) {}
+}
+  /*constructor(private sqliteService: SQLiteService, private userService: UserService) {}
 
   register() {
     const user = {
@@ -59,3 +58,4 @@ export class RegisterPage {
     this.showDateTime = false; // Cerrar el modal después de seleccionar la fecha
   }
 }
+*/

@@ -1,64 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { SQLiteService } from '../sqlite.service';
-import { UserService } from '../user.service'; // Asegúrate de importar UserService
-import { Capacitor } from '@capacitor/core'; // Importa Capacitor
+import { UserService, User } from '../user.service';
 
 @Component({
   selector: 'app-user-management',
   templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.scss'],
 })
 export class UserManagementComponent implements OnInit {
-  users: any[] = [];
-  newUser = { usuario: '', nombre: '', apellido: '' }; // Para almacenar datos del nuevo usuario
+  users: User[] = []; // Inicializa la lista de usuarios
 
-  constructor(private sqliteService: SQLiteService, private userService: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.sqliteService.initializeDatabase()
-      .then(() => this.loadUsers())
-      .catch(e => console.error('Error initializing database:', e));
-  }
-  async loadUsers() {
-    // Intenta cargar desde SQLite
-    this.users = await this.sqliteService.getUsers();
-    
-    // Si no hay usuarios en SQLite, carga desde Local Storage como respaldo
-    if (this.users.length === 0) {
-      this.users = JSON.parse(localStorage.getItem('users') || '[]');
-    }
-  
-    console.log('Loaded users:', this.users);
-  }
- 
-  /* async loadUsers() {
-    try {
-      this.users = this.userService.getUsers();//await this.sqliteService.getUsers();
-      console.log('Loaded users:', this.users);
-    } catch (e) {
-      console.error('Error loading users:', e);
-    }
-  }*/
-
-  async onAddUser() {
-    const { usuario, nombre, apellido } = this.newUser; // Desestructura el nuevo usuario
-
-    if (Capacitor.isNativePlatform()) {
-      await this.sqliteService.addUser({ usuario, nombre, apellido });
-    } else {
-      this.userService.addUser({ usuario, nombre, apellido });
-    }
-
-    await this.loadUsers(); // Recargar la lista de usuarios
-    this.newUser = { usuario: '', nombre: '', apellido: '' }; // Limpiar el formulario
+    this.loadUsers(); // Carga los usuarios al inicializar el componente
   }
 
-  async deleteUser(usuario: string) {
-    try {
-      this.userService.deleteUser(usuario);//await this.sqliteService.deleteUser(usuario);
-      this.loadUsers();
-    } catch (e) {
-      console.error('Error deleting user:', e);
-    }
+  loadUsers() {
+    this.userService.getUsers().subscribe({
+      next: (data: User[]) => { // Usa la interfaz aquí también
+        this.users = data; // Asigna los datos recibidos a la variable users
+      },
+      error: (error) => {
+        console.error('Error loading users:', error); // Manejo de errores
+      },
+    });
+  }
+
+  deleteUser(usuario: string) {
+    this.userService.deleteUser(usuario).subscribe({
+      next: () => {
+        this.loadUsers(); // Recarga la lista de usuarios después de eliminar
+      },
+      error: (error) => {
+        console.error('Error deleting user:', error); // Manejo de errores
+      },
+    });
   }
 }

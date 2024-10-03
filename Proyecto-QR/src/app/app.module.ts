@@ -14,11 +14,13 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+//Api rest
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserManagementComponent // Agrega el componente a las declaraciones
+    UserManagementComponent, // Agrega el componente a las declaraciones
   ],
   imports: [
     BrowserModule, 
@@ -30,10 +32,12 @@ import { MatInputModule } from '@angular/material/input';
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }
+    
   ],
   bootstrap: [AppComponent],
 })

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AnimationController } from '@ionic/angular';
-
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -16,7 +16,7 @@ export class HomePage {
   mensaje = '';
   spinner = false;
 
-  constructor(private router: Router, private animationController: AnimationController) {}
+  constructor(private router: Router, private animationController: AnimationController, private http: HttpClient) {} // Inyección de HttpClient
 
   ngAfterContentInit() {
     this.animarLogin();
@@ -44,40 +44,48 @@ export class HomePage {
     const complexPattern = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[.,\-!])[a-zA-Z0-9.,\-!]*$/;
 
     if (this.user.username.length > 0) {
-      if (this.user.password.length >= 8 && complexPattern.test(this.user.password)) {
-        // Buscar usuario en localStorage
-        const users = JSON.parse(localStorage.getItem('users') || '[]');
-        const foundUser = users.find((storedUser: any) => 
-          storedUser.usuario === this.user.username && storedUser.password === this.user.password
-        );
-
-        if (foundUser) {
-          this.mensaje = 'Conexión exitosa';
-          let navigationExtras: NavigationExtras = {
-            state: {
-              username: foundUser.usuario,
-              nombre: foundUser.nombre,
-              apellido: foundUser.apellido,
-              nivelEducacion: foundUser.nivelEducacion,
-              fechaNacimiento: foundUser.fechaNacimiento
-            },
-          };
-          this.cambiarSpinner();
-          setTimeout(() => {
-            this.router.navigate(['/perfil'], navigationExtras); // Redirige a la página de inicio
+        if (this.user.password.length >= 8 && complexPattern.test(this.user.password)) {
+            // Muestra el spinner antes de llamar a la API
             this.cambiarSpinner();
-            this.mensaje = "";
-          }, 3000);
+
+            // Aquí puedes hacer la llamada a la API
+            this.http.post('http://localhost:3000/api/login', {
+              usuario: this.user.username,
+              contrasena: this.user.password
+          }).subscribe({
+              next: (response: any) => {
+                  console.log('Respuesta de la API:', response); // Verifica la estructura de la respuesta
+          
+                  let navigationExtras: NavigationExtras = {
+                      state: {
+                          user: {
+                            usuario: response.usuario.usuario,
+                            nombre: response.usuario.nombre,
+                            apellido: response.usuario.apellido,
+                            nivelEducacion: response.usuario.nivelEducacion,
+                            fechaNacimiento: response.usuario.fechaNacimiento,
+                          }
+                      }
+                  };
+          
+                  // Asegúrate de pasar las propiedades adecuadamente
+                  this.router.navigate(['/perfil'], navigationExtras);
+                  this.cambiarSpinner(); // Detiene el spinner
+              },
+              error: (error) => {
+                  console.error('Error al iniciar sesión', error);
+                  this.mensaje = 'Usuario o contraseña incorrectos';
+                  this.cambiarSpinner(); // Detiene el spinner
+              }
+          });
         } else {
-          this.mensaje = 'Usuario o contraseña incorrectos';
+            this.mensaje = 'Su contraseña debe tener un largo de 8 caracteres y contener al menos 1 número, 1 letra y 1 símbolo';
         }
-      } else {
-        this.mensaje = 'Su contraseña debe tener un largo de 8 caracteres y contener al menos 1 número, 1 letra y 1 símbolo';
-      }
     } else {
-      this.mensaje = 'Usuario vacío';
+        this.mensaje = 'Usuario vacío';
     }
-  }
+}
+
 
   togglePassword() {
     this.showPassword = !this.showPassword;

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { PerfilPage } from './perfil.page';
+import { PerfilComponent } from './perfil.page'; // Cambia a PerfilComponent
 
 const routes: Routes = [
   {
     path: '',
-    component: PerfilPage
+    component: PerfilComponent
   }
 ];
 

@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
-import { SQLiteService } from './sqlite.service';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+export interface User { // Define la interfaz aquí
+  usuario: string;
+  nombre: string;
+  apellido: string;
+  nivelEducacion: string;
+  fechaNacimiento: string;
+  contrasena: string;
+}
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserService {
-  constructor(private sqliteService: SQLiteService) {}
+  private apiUrl = 'http://localhost:3000/api'; // Asegúrate de que esto sea correcto
 
-  getUsers() {
-    return JSON.parse(localStorage.getItem('users') || '[]');
+  constructor(private http: HttpClient) { }
+
+  // Método para obtener todos los usuarios
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users`); // Asegúrate de que esto sea correcto
   }
 
-  addUser(user: { usuario: string; nombre: string; apellido: string }) {
-    // Agregar usuario a SQLite
-    this.sqliteService.addUser(user);
-    const users = this.getUsers(); // Obtener usuarios actuales desde Local Storage
-    users.push(user); // Agregar nuevo usuario
-    localStorage.setItem('users', JSON.stringify(users));// Almacenar nuevamente en Local Storage
-    console.log('Usuario agregado a localStorage:', user);
+  // Método para eliminar un usuario
+  deleteUser(usuario: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/users/${usuario}`); // Asegúrate de que la ruta API esté implementada
   }
-
-  deleteUser(username: string) {
-    let users = this.getUsers();
-    users = users.filter((user: any) => user.usuario !== username);
-    localStorage.setItem('users', JSON.stringify(users));
-    console.log('Usuario eliminado de localStorage:', username);
-  }
+   // Método para registrar un usuario
+   registerUser(user: any): Observable<any> {
+    console.log('Datos a registrar:', user);
+    return this.http.post(`${this.apiUrl}/register`, user); // Realiza una solicitud POST a la API
+    }
 }
