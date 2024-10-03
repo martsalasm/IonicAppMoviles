@@ -53,7 +53,8 @@
           </ion-item>
         </ion-list>
         <ion-button expand="full" (click)="register()">Registrar</ion-button>
-        <ion-label *ngIf="mensaje" color="success">{{ mensaje }}</ion-label>
+        <!-- Modificación aquí para cambiar el color del mensaje -->
+        <ion-label *ngIf="mensaje" [color]="isSuccess ? 'success' : 'danger'">{{ mensaje }}</ion-label>
       </ion-card-content>
     </ion-card>
   </div>
