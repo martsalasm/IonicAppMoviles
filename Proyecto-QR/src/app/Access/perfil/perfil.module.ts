@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { PerfilPageRoutingModule } from './perfil-routing.module';
-import { PerfilPage } from './perfil.page';
-
+import { PerfilComponent } from './perfil.page'; // Cambia a PerfilComponent
 // Angular Material Imports
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +24,6 @@ import { MatIconModule } from '@angular/material/icon';
     MatNativeDateModule,
     MatIconModule
   ],
-  declarations: [PerfilPage]
+  declarations: [PerfilComponent]
 })
 export class PerfilPageModule {}

@@ -1,24 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    
-    <ion-title>Perfil de {{username}}</ion-title>
+    <ion-title>Perfil de {{ username }}</ion-title> <!-- Muestra correctamente el nombre de usuario -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Bienvenido/a {{username}}</ion-card-title>
+      <ion-card-title>Bienvenido/a {{ username }}</ion-card-title> <!-- El nombre de usuario debe aparecer correctamente aquí -->
     </ion-card-header>
 
     <ion-card-content>
-      <p><strong>Nombre:</strong> {{nombre}}</p>
-      <p><strong>Apellido:</strong> {{apellido}}</p>
-      <p><strong>Nivel de Educación:</strong> {{nivelEducacion}}</p>
+      <p><strong>Nombre:</strong> {{ nombre }}</p>
+      <p><strong>Apellido:</strong> {{ apellido }}</p>
+      <p><strong>Nivel de Educación:</strong> {{ nivelEducacion }}</p>
       <p><strong>Fecha de Nacimiento:</strong> {{ fechaNacimiento | date:'dd/MM/yyyy' }}</p>
     </ion-card-content>
   </ion-card>

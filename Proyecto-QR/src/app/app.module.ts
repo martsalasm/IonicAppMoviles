@@ -9,11 +9,18 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Corregido a BrowserAnimationsModule
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { UserManagementComponent } from './user-management/user-management.component'; // Importa UserManagementComponent
+//MatDatePicker imports
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+//Api rest
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UserManagementComponent // Agrega el componente a las declaraciones
+    UserManagementComponent, // Agrega el componente a las declaraciones
   ],
   imports: [
     BrowserModule, 
@@ -21,10 +28,16 @@ import { UserManagementComponent } from './user-management/user-management.compo
     AppRoutingModule, 
     FormsModule, // Agregado FormsModule para usar ngModel
     BrowserAnimationsModule, // Cambiado a BrowserAnimationsModule
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy, }
+    
   ],
   bootstrap: [AppComponent],
 })
