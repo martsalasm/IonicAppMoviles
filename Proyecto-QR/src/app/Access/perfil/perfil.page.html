@@ -21,12 +21,11 @@
       <p><strong>Fecha de Nacimiento:</strong> {{ fechaNacimiento | date:'dd/MM/yyyy' }}</p>
     </ion-card-content>
   </ion-card>
-  <div *ngIf="tipoUsuario === 'estudiante'">
-    <ion-button (click)="editarDatos()">Editar mis Datos</ion-button>
+  <ion-button (click)="editarDatos()">Editar mis Datos</ion-button>
+  <span *ngIf="tipoUsuario === 'Estudiante'">
     <ion-button (click)="escaneoQR()">Estoy Presente</ion-button>
-  </div>
-  <div *ngIf="tipoUsuario === 'profesor'">
-    <ion-button (click)="editarDatos()">Editar mis Datos</ion-button>
+  </span>
+  <span *ngIf="tipoUsuario === 'Profesor'">
     <ion-button (click)="registrarAsistencia()">Registrar Asistencia</ion-button>
-  </div>
+  </span>
 </ion-content>

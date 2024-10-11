@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
 // Función para capitalizar
 const capitalize = (str: string) => {
@@ -36,7 +37,7 @@ export class PerfilComponent implements OnInit {
       this.username = capitalize(user.usuario);
       this.nombre = capitalize(user.nombre);
       this.apellido = capitalize(user.apellido);
-      this.tipoUsuario = user.tipoUsuario;
+      this.tipoUsuario = capitalize(user.tipoUsuario);
 
       this.fechaNacimiento = user.fechaNacimiento
         ? new Date(user.fechaNacimiento).toISOString().split('T')[0]
@@ -46,13 +47,27 @@ export class PerfilComponent implements OnInit {
     }
   }
 
-  // Funciones para las acciones del perfil
-
   // Escaneo de QR para estudiantes
-  escaneoQR() {
-    console.log("Abriendo cámara para escanear QR...");
-    // Lógica para abrir la cámara y escanear el QR
+async escaneoQR() {
+  try {
+    await BarcodeScanner.prepare(); // Prepara el escáner
+    const result = await BarcodeScanner.startScan(); // Inicia el escaneo
+
+    if (result.hasContent) {
+      const usernameToSend = this.username; // Obtiene el nombre de usuario
+      console.log("Nombre de usuario a enviar:", usernameToSend);
+
+      // Aquí puedes implementar la lógica para enviar el nombre de usuario al servidor
+      // Por ejemplo, podrías llamar a un servicio que maneje el registro de asistencia
+      // Ejemplo:
+      // await this.asistenciaService.registrarAsistencia(usernameToSend);
+
+      console.log("QR escaneado, asistente registrado:", result.content);
+    }
+  } catch (error) {
+    console.error("Error al escanear el QR:", error);
   }
+}
 
   // Registro de asistencia para profesores
   registrarAsistencia() {
