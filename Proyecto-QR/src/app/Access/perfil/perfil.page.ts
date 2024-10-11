@@ -10,7 +10,7 @@ interface User {
   usuario: string;
   nombre: string;
   apellido: string;
-  nivelEducacion: string;
+  tipoUsuario: string;
   fechaNacimiento: string; // Cambia a string si la fecha llega como un string
 }
 
@@ -23,7 +23,7 @@ export class PerfilComponent implements OnInit {
   username: string = '';
   nombre: string = '';
   apellido: string = '';
-  nivelEducacion: string = '';
+  tipoUsuario: string = '';
   fechaNacimiento: string | null = null; // Cambiamos a string para evitar el error
 
   constructor(private router: Router) {}
@@ -44,7 +44,7 @@ export class PerfilComponent implements OnInit {
       this.username = capitalize(user.usuario); // Asignamos correctamente las propiedades
       this.nombre = capitalize(user.nombre);
       this.apellido = capitalize(user.apellido);
-      this.nivelEducacion = user.nivelEducacion;
+      this.tipoUsuario = user.tipoUsuario;
 
       // Convertir la fecha a string (formato: 'YYYY-MM-DD') antes de asignarla
       this.fechaNacimiento = user.fechaNacimiento ? new Date(user.fechaNacimiento).toISOString().split('T')[0] : null;

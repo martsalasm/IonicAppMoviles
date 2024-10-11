@@ -11,7 +11,7 @@ export class RegisterPage {
     usuario: string = '';
     nombre: string = '';
     apellido: string = '';
-    nivelEducacion: string = '';
+    tipoUsuario: string = '';
     fechaNacimiento: string = '';
     password: string = '';
     mensaje: string = '';
@@ -53,7 +53,7 @@ export class RegisterPage {
         this.mensaje = '';
 
         // Verificar que todos los campos estén llenos
-        if (!this.usuario || !this.nombre || !this.apellido || !this.nivelEducacion || !this.fechaNacimiento || !this.password) {
+        if (!this.usuario || !this.nombre || !this.apellido || !this.tipoUsuario || !this.fechaNacimiento || !this.password) {
             this.presentAlert('Error', 'Por favor, rellena todos los campos.');
             this.isSuccess = false;
             return; // Salir si falta algún campo
@@ -72,7 +72,7 @@ export class RegisterPage {
             usuario: this.usuario.toLowerCase(), // Normaliza a minúsculas
             nombre: this.nombre,
             apellido: this.apellido,
-            nivelEducacion: this.nivelEducacion,
+            tipoUsuario: this.tipoUsuario,
             fechaNacimiento: this.fechaNacimiento,
             contrasena: this.password,
         };
@@ -102,7 +102,7 @@ export class RegisterPage {
         this.usuario = '';
         this.nombre = '';
         this.apellido = '';
-        this.nivelEducacion = '';
+        this.tipoUsuario = '';
         this.fechaNacimiento = '';
         this.password = '';
     }

@@ -23,7 +23,8 @@
         <ion-list>
           <ion-item>
             <ion-label position="stacked">Nombre de Usuario</ion-label>
-            <ion-input type="text" [(ngModel)]="usuario" placeholder="Ingresa tu nombre de usuario" required></ion-input>
+            <ion-input type="text" [(ngModel)]="usuario" placeholder="Ingresa tu nombre de usuario"
+              required></ion-input>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Nombre</ion-label>
@@ -34,19 +35,17 @@
             <ion-input [(ngModel)]="apellido" type="text" placeholder="Ingresa tu apellido" required></ion-input>
           </ion-item>
           <ion-item>
-            <ion-label position="stacked">Nivel de Educación</ion-label>
-            <ion-select [(ngModel)]="nivelEducacion" placeholder="Selecciona" required>
-              <ion-select-option value="Primaria">Primaria</ion-select-option>
-              <ion-select-option value="Secundaria">Secundaria</ion-select-option>
-              <ion-select-option value="Tecnica">Educación Técnica</ion-select-option>
-              <ion-select-option value="Profesional">Educación Profesional</ion-select-option>
-              <ion-select-option value="Superior">Educación Superior</ion-select-option>
+            <ion-label position="stacked">Tipo de Usuario</ion-label>
+            <ion-select [(ngModel)]="tipoUsuario" placeholder="Selecciona" required>
+              <ion-select-option value="Estudiante">Estudiante</ion-select-option>
+              <ion-select-option value="Profesor">Profesor</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Fecha de Nacimiento</ion-label>
             <mat-form-field appearance="outline" style="width: 100%; margin-top: 10px;">
-              <input matInput [matDatepicker]="picker" [(ngModel)]="fechaNacimiento" placeholder="Selecciona tu fecha de nacimiento">
+              <input matInput [matDatepicker]="picker" [(ngModel)]="fechaNacimiento"
+                placeholder="Selecciona tu fecha de nacimiento">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>

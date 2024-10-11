@@ -5,7 +5,7 @@ export interface User { // Define la interfaz aquí
   usuario: string;
   nombre: string;
   apellido: string;
-  nivelEducacion: string;
+  tipoUsuario: string;
   fechaNacimiento: string;
   contrasena: string;
 }

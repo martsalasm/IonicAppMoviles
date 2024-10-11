@@ -63,7 +63,7 @@ export class HomePage {
                             usuario: response.usuario, // Aquí estás accediendo directamente al valor
                             nombre: response.nombre,
                             apellido: response.apellido,
-                            nivelEducacion: response.nivelEducacion,
+                            tipoUsuario: response.tipoUsuario,
                             fechaNacimiento: response.fechaNacimiento,
                           }
                       }
