@@ -17,8 +17,16 @@
     <ion-card-content>
       <p><strong>Nombre:</strong> {{ nombre }}</p>
       <p><strong>Apellido:</strong> {{ apellido }}</p>
-      <p><strong>Nivel de Educación:</strong> {{ tipoUsuario }}</p>
+      <p><strong>Tipo de Usuario:</strong> {{ tipoUsuario }}</p>
       <p><strong>Fecha de Nacimiento:</strong> {{ fechaNacimiento | date:'dd/MM/yyyy' }}</p>
     </ion-card-content>
   </ion-card>
+  <div *ngIf="tipoUsuario === 'estudiante'">
+    <ion-button (click)="editarDatos()">Editar mis Datos</ion-button>
+    <ion-button (click)="escaneoQR()">Estoy Presente</ion-button>
+  </div>
+  <div *ngIf="tipoUsuario === 'profesor'">
+    <ion-button (click)="editarDatos()">Editar mis Datos</ion-button>
+    <ion-button (click)="registrarAsistencia()">Registrar Asistencia</ion-button>
+  </div>
 </ion-content>
