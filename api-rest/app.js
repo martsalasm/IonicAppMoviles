@@ -129,6 +129,64 @@ app.post("/api/login", (req, res) => {
     }); //res.json({ message: "Inicio de sesión exitoso", usuario: row });
   });
 });
+// Ruta para actualizar un usuario
+app.put("/api/users/:usuario", (req, res) => {
+    const { usuario } = req.params; // Obtener el nombre de usuario de los parámetros de la URL
+    const {
+      nombre,
+      apellido,
+      tipoUsuario,
+      fechaNacimiento,
+      contrasena,
+    } = req.body;
+  
+    // Construir una consulta para actualizar solo los campos proporcionados
+    const fieldsToUpdate = [];
+    const values = [];
+  
+    if (nombre) {
+      fieldsToUpdate.push("nombre = ?");
+      values.push(nombre);
+    }
+    if (apellido) {
+      fieldsToUpdate.push("apellido = ?");
+      values.push(apellido);
+    }
+    if (tipoUsuario) {
+      fieldsToUpdate.push("tipoUsuario = ?");
+      values.push(tipoUsuario);
+    }
+    if (fechaNacimiento) {
+      fieldsToUpdate.push("fechaNacimiento = ?");
+      values.push(fechaNacimiento);
+    }
+    if (contrasena) {
+      fieldsToUpdate.push("contrasena = ?");
+      values.push(contrasena);
+    }
+  
+    // Si no hay campos para actualizar, devuelve un error
+    if (fieldsToUpdate.length === 0) {
+      return res.status(400).json({ error: "No se proporcionaron campos para actualizar." });
+    }
+  
+    // Agregar el nombre de usuario al final de los valores
+    values.push(usuario);
+  
+    // Crear la consulta SQL
+    const sql = `UPDATE users SET ${fieldsToUpdate.join(", ")} WHERE usuario = ?`;
+  
+    db.run(sql, values, function (err) {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      if (this.changes === 0) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      res.json({ message: `Usuario ${usuario} actualizado correctamente` });
+    });
+  });
+  
 
 // Iniciar el servidor
 app.listen(port, () => {

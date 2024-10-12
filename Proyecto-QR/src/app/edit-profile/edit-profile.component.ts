@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService, User } from '../user.service'; //importar el servicio y la interfaz
+import { UserService, User } from '../user.service'; // Importar el servicio y la interfaz
 
 @Component({
   selector: 'app-edit-profile',
@@ -28,15 +28,22 @@ export class EditProfileComponent implements OnInit {
       this.nombre = user.nombre;
       this.apellido = user.apellido;
       this.tipoUsuario = user.tipoUsuario; // Asegúrate de cargar el tipo de usuario
-      this.fechaNacimiento = user.fechaNacimiento;
+      this.fechaNacimiento = user.fechaNacimiento || this.getCurrentDate(); // Establece la fecha de nacimiento o la fecha actual
       this.contrasena = user.contrasena || '';
+    } else {
+      this.fechaNacimiento = this.getCurrentDate(); // Si no hay usuario, establece la fecha actual
     }
+  }
+
+  getCurrentDate(): string {
+    const today = new Date();
+    return today.toISOString().substring(0, 10); // Formato YYYY-MM-DD
   }
 
   guardarCambios() {
     // Crea un objeto con toda la información del usuario
     const updatedUser: User = {
-      usuario: this.usuario, // Asegúrate de incluir 'usuario'
+      usuario: this.usuario.toLowerCase(), // Asegúrate de incluir 'usuario'
       nombre: this.nombre,
       apellido: this.apellido,
       tipoUsuario: this.tipoUsuario, // Asegúrate de incluir 'tipoUsuario'
