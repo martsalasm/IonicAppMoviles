@@ -48,26 +48,26 @@ export class PerfilComponent implements OnInit {
   }
 
   // Escaneo de QR para estudiantes
-async escaneoQR() {
-  try {
-    await BarcodeScanner.prepare(); // Prepara el escáner
-    const result = await BarcodeScanner.startScan(); // Inicia el escaneo
+  async escaneoQR() {
+    try {
+      await BarcodeScanner.prepare(); // Prepara el escáner
+      const result = await BarcodeScanner.startScan(); // Inicia el escaneo
 
-    if (result.hasContent) {
-      const usernameToSend = this.username; // Obtiene el nombre de usuario
-      console.log("Nombre de usuario a enviar:", usernameToSend);
+      if (result.hasContent) {
+        const usernameToSend = this.username; // Obtiene el nombre de usuario
+        console.log("Nombre de usuario a enviar:", usernameToSend);
 
-      // Aquí puedes implementar la lógica para enviar el nombre de usuario al servidor
-      // Por ejemplo, podrías llamar a un servicio que maneje el registro de asistencia
-      // Ejemplo:
-      // await this.asistenciaService.registrarAsistencia(usernameToSend);
+        // Aquí puedes implementar la lógica para enviar el nombre de usuario al servidor
+        // Por ejemplo, podrías llamar a un servicio que maneje el registro de asistencia
+        // Ejemplo:
+        // await this.asistenciaService.registrarAsistencia(usernameToSend);
 
-      console.log("QR escaneado, asistente registrado:", result.content);
+        console.log("QR escaneado, asistente registrado:", result.content);
+      }
+    } catch (error) {
+      console.error("Error al escanear el QR:", error);
     }
-  } catch (error) {
-    console.error("Error al escanear el QR:", error);
   }
-}
 
   // Registro de asistencia para profesores
   registrarAsistencia() {
@@ -77,7 +77,11 @@ async escaneoQR() {
 
   // Editar los datos del perfil
   editarDatos() {
-    console.log("Editando datos del perfil...");
-    // Lógica para editar los datos
+    this.router.navigate(['/edit-profile'], { state: { user: { 
+      usuario: this.username, // Agregar el nombre de usuario
+      nombre: this.nombre, 
+      apellido: this.apellido, 
+      fechaNacimiento: this.fechaNacimiento 
+    }}});
   }
 }
