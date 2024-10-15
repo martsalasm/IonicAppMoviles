@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { AlertController } from '@ionic/angular';
 
 // Función para capitalizar
 const capitalize = (str: string) => {
@@ -20,7 +21,7 @@ export class PerfilComponent implements OnInit {
   tipoUsuario: string = '';
   fechaNacimiento: string | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private alertCtrl: AlertController) {} 
 
   ngOnInit() {
     this.loadUser();
@@ -49,23 +50,37 @@ export class PerfilComponent implements OnInit {
 
   // Escaneo de QR para estudiantes
   async escaneoQR() {
+    const permission = await BarcodeScanner.checkPermission({ force: true });
+    
+    if (!permission.granted) {
+      const alert = await this.alertCtrl.create({
+        header: 'Permiso necesario',
+        message: 'Debes otorgar permisos de cámara para escanear el QR.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      return;
+    }
+
     try {
+      BarcodeScanner.hideBackground(); // Para ocultar el fondo mientras se escanea
       await BarcodeScanner.prepare(); // Prepara el escáner
+
       const result = await BarcodeScanner.startScan(); // Inicia el escaneo
 
       if (result.hasContent) {
-        const usernameToSend = this.username; // Obtiene el nombre de usuario
-        console.log("Nombre de usuario a enviar:", usernameToSend);
+        const usernameToSend = this.username;
+        console.log('Nombre de usuario a enviar:', usernameToSend);
+        console.log('QR escaneado, contenido:', result.content);
 
-        // Aquí puedes implementar la lógica para enviar el nombre de usuario al servidor
-        // Por ejemplo, podrías llamar a un servicio que maneje el registro de asistencia
+        // Aquí implementar la lógica para enviar el nombre de usuario al servidor
         // Ejemplo:
         // await this.asistenciaService.registrarAsistencia(usernameToSend);
 
-        console.log("QR escaneado, asistente registrado:", result.content);
+        BarcodeScanner.showBackground(); // Muestra el fondo después del escaneo
       }
     } catch (error) {
-      console.error("Error al escanear el QR:", error);
+      console.error('Error al escanear el QR:', error);
     }
   }
 
