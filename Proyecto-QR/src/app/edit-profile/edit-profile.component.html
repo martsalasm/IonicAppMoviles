@@ -24,11 +24,11 @@
           <ion-list>
             <ion-item>
               <ion-label position="stacked">Nombre</ion-label>
-              <ion-input [(ngModel)]="nombre" name="nombre" placeholder="Ingresa tu nombre" required></ion-input>
+              <ion-input [(ngModel)]="nombre" name="nombre" placeholder="Ingresa tu nuevo nombre" required></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Apellido</ion-label>
-              <ion-input [(ngModel)]="apellido" name="apellido" placeholder="Ingresa tu apellido" required></ion-input>
+              <ion-input [(ngModel)]="apellido" name="apellido" placeholder="Ingresa tu nuevo apellido" required></ion-input>
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Fecha de Nacimiento</ion-label>
@@ -40,7 +40,7 @@
             </ion-item>
             <ion-item>
               <ion-label position="stacked">Contraseña</ion-label>
-              <ion-input [(ngModel)]="contrasena" name="contrasena" type="password" placeholder="Ingresa tu contraseña" required></ion-input>
+              <ion-input [(ngModel)]="contrasena" name="contrasena" type="password" placeholder="Ingresa tu nueva contraseña" required></ion-input>
             </ion-item>
           </ion-list>
           <ion-button expand="full" (click)="guardarCambios()">Guardar</ion-button>
