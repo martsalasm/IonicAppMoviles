@@ -10,14 +10,22 @@
 <ion-content [fullscreen]="true">
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Bienvenido/a {{ username }}</ion-card-title> <!-- El nombre de usuario debe aparecer correctamente aquí -->
+      <ion-card-title>Bienvenido/a {{ username }}</ion-card-title>
+      <!-- El nombre de usuario debe aparecer correctamente aquí -->
     </ion-card-header>
 
     <ion-card-content>
       <p><strong>Nombre:</strong> {{ nombre }}</p>
       <p><strong>Apellido:</strong> {{ apellido }}</p>
-      <p><strong>Nivel de Educación:</strong> {{ nivelEducacion }}</p>
+      <p><strong>Tipo de Usuario:</strong> {{ tipoUsuario }}</p>
       <p><strong>Fecha de Nacimiento:</strong> {{ fechaNacimiento | date:'dd/MM/yyyy' }}</p>
     </ion-card-content>
   </ion-card>
+  <ion-button (click)="editarDatos()">Editar mis Datos</ion-button>
+  <span *ngIf="tipoUsuario === 'Estudiante'">
+    <ion-button (click)="escaneoQR()">Estoy Presente</ion-button>
+  </span>
+  <span *ngIf="tipoUsuario === 'Profesor'">
+    <ion-button (click)="registrarAsistencia()">Registrar Asistencia</ion-button>
+  </span>
 </ion-content>

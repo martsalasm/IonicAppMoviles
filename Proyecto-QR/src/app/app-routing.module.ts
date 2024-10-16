@@ -31,9 +31,12 @@ const routes: Routes = [
     loadChildren: () => import('./page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule)
   },
   {
+    path: 'edit-profile',
+    loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfileModule)
+  },
+  {
     path: '**', redirectTo: 'page-not-found'  // Redirige a la página 404
-  }
-
+  },
 
 ];
 
