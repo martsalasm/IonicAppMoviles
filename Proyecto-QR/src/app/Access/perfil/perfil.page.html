@@ -20,14 +20,13 @@
       <p><strong>Tipo de Usuario:</strong> {{ tipoUsuario }}</p>
       <p><strong>Fecha de Nacimiento:</strong> {{ fechaNacimiento | date:'dd/MM/yyyy' }}</p>
     </ion-card-content>
-    <ion-button expand="full" (click)="logout()">Cerrar Sesión</ion-button>
-
   </ion-card>
-  <ion-button (click)="editarDatos()">Editar mis Datos</ion-button>
+  <ion-button expand="full" (click)="logout()">Cerrar Sesión</ion-button>
+  <ion-button  expand="full" (click)="editarDatos()">Editar mis Datos</ion-button>
   <span *ngIf="tipoUsuario === 'Estudiante'">
-    <ion-button (click)="escaneoQR()">Estoy Presente</ion-button>
+    <ion-button expand="full" (click)="escaneoQR()">Escanear QR asistencia</ion-button>
   </span>
   <span *ngIf="tipoUsuario === 'Profesor'">
-    <ion-button (click)="registrarAsistencia()">Registrar Asistencia</ion-button>
+    <ion-button expand="full" (click)="registrarAsistencia()">Registrar asistencia alumnos</ion-button>
   </span>
 </ion-content>
