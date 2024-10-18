@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { UserManagementComponent } from './user-management/user-management.component';
-
+import { AuthGuard } from './guards/auth.guard'; // Importa el guard
 
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
   },
   {
     path: '',
@@ -15,29 +15,34 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./Access/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./Access/register/register.module').then(m => m.RegisterPageModule)
   },
   {
     path: 'perfil',
-    loadChildren: () => import('./Access/perfil/perfil.module').then( m => m.PerfilPageModule)
+    loadChildren: () => import('./Access/perfil/perfil.module').then(m => m.PerfilPageModule),
+    canActivate: [AuthGuard] // Aplica el AuthGuard para proteger la ruta
   },
   {
     path: 'recuperar-password',
-    loadChildren: () => import('./recuperar/recuperar.module').then( m => m.RecuperarPageModule)
+    loadChildren: () => import('./recuperar/recuperar.module').then(m => m.RecuperarPageModule)
   },
-  { path: 'user-management', component: UserManagementComponent },
+  { 
+    path: 'user-management', 
+    component: UserManagementComponent 
+  },
   {
     path: 'page-not-found',
-    loadChildren: () => import('./page-not-found/page-not-found.module').then( m => m.PageNotFoundPageModule)
+    loadChildren: () => import('./page-not-found/page-not-found.module').then(m => m.PageNotFoundPageModule)
   },
   {
     path: 'edit-profile',
-    loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfileModule)
+    loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfileModule),
+    canActivate: [AuthGuard] // Aplica el AuthGuard para proteger la ruta
   },
   {
-    path: '**', redirectTo: 'page-not-found'  // Redirige a la página 404
+    path: '**',
+    redirectTo: 'page-not-found'  // Redirige a la página 404
   },
-
 ];
 
 @NgModule({

@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AlertController } from '@ionic/angular';
+import { AuthService } from 'src/app/services/auth.service'; // Importa AuthService
 
 // Función para capitalizar
 const capitalize = (str: string) => {
   if (!str) return str;
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  return str
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
 };
 
 @Component({
@@ -21,7 +25,11 @@ export class PerfilComponent implements OnInit {
   tipoUsuario: string = '';
   fechaNacimiento: string | null = null;
 
-  constructor(private router: Router, private alertCtrl: AlertController) {} 
+  constructor(
+    private router: Router,
+    private alertCtrl: AlertController,
+    private authService: AuthService // Inyecta AuthService en el constructor
+  ) {} 
 
   ngOnInit() {
     this.loadUser();
@@ -98,5 +106,11 @@ export class PerfilComponent implements OnInit {
       apellido: this.apellido, 
       fechaNacimiento: this.fechaNacimiento 
     }}});
+  }
+
+  // Método para cerrar sesión
+  logout() {
+    this.authService.logout(); // Llama al método logout del AuthService para eliminar al usuario del localStorage
+    this.router.navigate(['/login']); // Redirige al login después de cerrar sesión
   }
 }

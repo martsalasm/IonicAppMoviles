@@ -20,6 +20,8 @@
       <p><strong>Tipo de Usuario:</strong> {{ tipoUsuario }}</p>
       <p><strong>Fecha de Nacimiento:</strong> {{ fechaNacimiento | date:'dd/MM/yyyy' }}</p>
     </ion-card-content>
+    <ion-button expand="full" (click)="logout()">Cerrar Sesión</ion-button>
+
   </ion-card>
   <ion-button (click)="editarDatos()">Editar mis Datos</ion-button>
   <span *ngIf="tipoUsuario === 'Estudiante'">
