@@ -41,7 +41,8 @@ const routes: Routes = [
   },
   {
     path: 'paginaqr',
-    loadChildren: () => import('./Access/paginaqr/paginaqr.module').then( m => m.PaginaqrPageModule)
+    loadChildren: () => import('./Access/paginaqr/paginaqr.module').then( m => m.PaginaqrPageModule),
+    canActivate: [AuthGuard] // Aplica el AuthGuard para proteger la ruta
   },
   {
     path: '**',
