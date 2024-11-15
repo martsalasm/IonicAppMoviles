@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service'; // Importa AuthService
-
+import { toDataURL } from 'qrcode';
 // Función para capitalizar
 const capitalize = (str: string) => {
   if (!str) return str;
@@ -24,6 +24,17 @@ export class PerfilComponent implements OnInit {
   apellido: string = '';
   tipoUsuario: string = '';
   fechaNacimiento: string | null = null;
+  qrCodeData: string = '';
+
+  async generarQRCode() {
+    const data = 'Informacion para registrar asistencia'; // Información necesaria
+  
+    try {
+      this.qrCodeData = await toDataURL(data, { errorCorrectionLevel: 'H' });
+    } catch (err) {
+      console.error('Error al generar el QR:', err);
+    }
+  }
 
   constructor(
     private router: Router,
