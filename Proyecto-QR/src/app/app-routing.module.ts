@@ -40,6 +40,10 @@ const routes: Routes = [
     canActivate: [AuthGuard] // Aplica el AuthGuard para proteger la ruta
   },
   {
+    path: 'paginaqr',
+    loadChildren: () => import('./Access/paginaqr/paginaqr.module').then( m => m.PaginaqrPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'page-not-found'  // Redirige a la página 404
   },

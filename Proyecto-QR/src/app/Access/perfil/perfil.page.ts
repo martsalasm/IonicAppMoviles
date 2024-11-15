@@ -78,8 +78,10 @@ export class PerfilComponent implements OnInit {
       await BarcodeScanner.prepare();
 
       const result = await BarcodeScanner.startScan();
-
-      if (result.hasContent) {
+      if (result.hasContent && result.content) {
+        // Si el escaneo es exitoso, mostrar los datos
+        console.log('QR escaneado:', result);
+      if (result.content.includes('Asistencia registrada')){
         // Obtén los datos del usuario y la fecha actual
         const timestamp = formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss', 'en');
         const body = `
@@ -96,20 +98,15 @@ export class PerfilComponent implements OnInit {
         // Abre el correo usando el URI
         window.open(mailtoURI, '_blank');
         BarcodeScanner.showBackground();
-      }
+      }}
     } catch (error) {
       console.error('Error al escanear el QR:', error);
     }
   }
-  // Generar código QR para profesores
-  async generarQRCode() {
+//ir a pagina qr
+  abrirPaginaQr() {
     const timestamp = new Date().toISOString();
-    const data = `Asistencia registrada a las ${timestamp}`; // Información y timestamp
-    try {
-      this.qrCodeData = await toDataURL(data, { errorCorrectionLevel: 'H' });
-    } catch (err) {
-      console.error('Error al generar el QR:', err);
-    }
+    this.router.navigate(['/paginaqr'], { state: { timestamp } });
   }
   // Editar los datos del perfil
   editarDatos() {
