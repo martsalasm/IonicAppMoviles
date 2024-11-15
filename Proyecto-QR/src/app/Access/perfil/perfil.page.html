@@ -25,8 +25,11 @@
     <ion-button expand="full" (click)="escaneoQR()">Escanear QR asistencia</ion-button>
   </span>
   <span *ngIf="tipoUsuario === 'Profesor'">
-    <ion-button expand="full" (click)="registrarAsistencia()">Registrar asistencia alumnos</ion-button>
-  </span>
+    <ion-button expand="full" (click)="generarQRCode()">Registrar asistencia alumnos</ion-button>
+    <div *ngIf="qrCodeData" style="display: flex; justify-content: center; align-items: center; width: 100%; padding: 10px;">
+      <img [src]="qrCodeData" alt="QR Code de asistencia" style="max-width: 100%; height: auto;"/>
+    </div>
+  </span>  
   <ion-button  expand="full" (click)="editarDatos()">Editar mis Datos</ion-button>
   <ion-button expand="full" (click)="logout()" color="danger">Cerrar Sesión</ion-button>
 </ion-content>

@@ -26,16 +26,6 @@ export class PerfilComponent implements OnInit {
   fechaNacimiento: string | null = null;
   qrCodeData: string = '';
 
-  async generarQRCode() {
-    const data = 'Informacion para registrar asistencia'; // Información necesaria
-  
-    try {
-      this.qrCodeData = await toDataURL(data, { errorCorrectionLevel: 'H' });
-    } catch (err) {
-      console.error('Error al generar el QR:', err);
-    }
-  }
-
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
@@ -70,7 +60,7 @@ export class PerfilComponent implements OnInit {
   // Escaneo de QR para estudiantes
   async escaneoQR() {
     const permission = await BarcodeScanner.checkPermission({ force: true });
-    
+  
     if (!permission.granted) {
       const alert = await this.alertCtrl.create({
         header: 'Permiso necesario',
@@ -80,35 +70,40 @@ export class PerfilComponent implements OnInit {
       await alert.present();
       return;
     }
-
+  
     try {
-      BarcodeScanner.hideBackground(); // Para ocultar el fondo mientras se escanea
-      await BarcodeScanner.prepare(); // Prepara el escáner
-
-      const result = await BarcodeScanner.startScan(); // Inicia el escaneo
-
+      BarcodeScanner.hideBackground();
+      await BarcodeScanner.prepare();
+  
+      const result = await BarcodeScanner.startScan();
+  
       if (result.hasContent) {
         const usernameToSend = this.username;
-        console.log('Nombre de usuario a enviar:', usernameToSend);
-        console.log('QR escaneado, contenido:', result.content);
-
-        // Aquí implementar la lógica para enviar el nombre de usuario al servidor
-        // Ejemplo:
-        // await this.asistenciaService.registrarAsistencia(usernameToSend);
-
-        BarcodeScanner.showBackground(); // Muestra el fondo después del escaneo
+        const qrContent = result.content;
+  
+        // Construye el URI mailto
+        const mailtoURI = `mailto:mart.salasm@duocuc.cl?subject=Asistencia%20registrada&body=El%20usuario%20${usernameToSend}%20ha%20registrado%20asistencia.%20Contenido%20del%20QR:%20${encodeURIComponent(
+          qrContent
+        )}`;
+  
+        // Abre el correo usando el URI
+        window.open(mailtoURI, '_blank');
+        BarcodeScanner.showBackground();
       }
     } catch (error) {
       console.error('Error al escanear el QR:', error);
     }
   }
-
-  // Registro de asistencia para profesores
-  registrarAsistencia() {
-    console.log("Registrando asistencia...");
-    // Lógica para registrar asistencia
+//Genear qr code para profesores
+  async generarQRCode() {
+    const timestamp = new Date().toISOString();
+    const data = `Asistencia registrada a las ${timestamp}`; // Información y timestamp
+    try {
+      this.qrCodeData = await toDataURL(data, { errorCorrectionLevel: 'H' });
+    } catch (err) {
+      console.error('Error al generar el QR:', err);
+    }
   }
-
   // Editar los datos del perfil
   editarDatos() {
     this.router.navigate(['/edit-profile'], { state: { user: { 
