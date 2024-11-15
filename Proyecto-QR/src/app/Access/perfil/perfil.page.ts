@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { AlertController } from '@ionic/angular';
-import { AuthService } from 'src/app/services/auth.service'; // Importa AuthService
+import { AuthService } from 'src/app/services/auth.service';
 import { toDataURL } from 'qrcode';
+import { formatDate } from '@angular/common';
+
 // Función para capitalizar
 const capitalize = (str: string) => {
   if (!str) return str;
@@ -24,13 +26,13 @@ export class PerfilComponent implements OnInit {
   apellido: string = '';
   tipoUsuario: string = '';
   fechaNacimiento: string | null = null;
-  qrCodeData: string = '';
+  qrCodeData: string = ''; // URL de datos del código QR generado para el profesor
 
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
-    private authService: AuthService // Inyecta AuthService en el constructor
-  ) {} 
+    private authService: AuthService
+  ) {}
 
   ngOnInit() {
     this.loadUser();
@@ -60,7 +62,7 @@ export class PerfilComponent implements OnInit {
   // Escaneo de QR para estudiantes
   async escaneoQR() {
     const permission = await BarcodeScanner.checkPermission({ force: true });
-  
+
     if (!permission.granted) {
       const alert = await this.alertCtrl.create({
         header: 'Permiso necesario',
@@ -70,22 +72,27 @@ export class PerfilComponent implements OnInit {
       await alert.present();
       return;
     }
-  
+
     try {
       BarcodeScanner.hideBackground();
       await BarcodeScanner.prepare();
-  
+
       const result = await BarcodeScanner.startScan();
-  
+
       if (result.hasContent) {
-        const usernameToSend = this.username;
-        const qrContent = result.content;
-  
+        // Obtén los datos del usuario y la fecha actual
+        const timestamp = formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss', 'en');
+        const body = `
+          Asistencia registrada para:
+          - Username: ${this.username}
+          - Nombre: ${this.nombre}
+          - Apellido: ${this.apellido}
+          - Fecha y Hora de Registro: ${timestamp}
+        `;
+
         // Construye el URI mailto
-        const mailtoURI = `mailto:mart.salasm@duocuc.cl?subject=Asistencia%20registrada&body=El%20usuario%20${usernameToSend}%20ha%20registrado%20asistencia.%20Contenido%20del%20QR:%20${encodeURIComponent(
-          qrContent
-        )}`;
-  
+        const mailtoURI = `mailto:mart.salasm@duocuc.cl?subject=Asistencia%20registrada&body=${encodeURIComponent(body)}`;
+
         // Abre el correo usando el URI
         window.open(mailtoURI, '_blank');
         BarcodeScanner.showBackground();
@@ -94,7 +101,7 @@ export class PerfilComponent implements OnInit {
       console.error('Error al escanear el QR:', error);
     }
   }
-//Genear qr code para profesores
+  // Generar código QR para profesores
   async generarQRCode() {
     const timestamp = new Date().toISOString();
     const data = `Asistencia registrada a las ${timestamp}`; // Información y timestamp
@@ -106,17 +113,21 @@ export class PerfilComponent implements OnInit {
   }
   // Editar los datos del perfil
   editarDatos() {
-    this.router.navigate(['/edit-profile'], { state: { user: { 
-      usuario: this.username, // Agregar el nombre de usuario
-      nombre: this.nombre, 
-      apellido: this.apellido, 
-      fechaNacimiento: this.fechaNacimiento 
-    }}});
+    this.router.navigate(['/edit-profile'], {
+      state: {
+        user: {
+          usuario: this.username,
+          nombre: this.nombre,
+          apellido: this.apellido,
+          fechaNacimiento: this.fechaNacimiento,
+        },
+      },
+    });
   }
 
   // Método para cerrar sesión
   logout() {
-    this.authService.logout(); // Llama al método logout del AuthService para eliminar al usuario del localStorage
-    this.router.navigate(['/login']); // Redirige al login después de cerrar sesión
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
