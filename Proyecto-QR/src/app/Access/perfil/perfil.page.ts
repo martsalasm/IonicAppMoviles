@@ -83,7 +83,7 @@ export class PerfilComponent implements OnInit {
         console.log('QR escaneado:', result);
       if (result.content.includes('Asistencia registrada')){
         // Obtén los datos del usuario y la fecha actual
-        const timestamp = formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss', 'en');
+        const timestamp = new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' }); // Obtiene la fecha y hora en la zona horaria de Chile
         const body = `
           Asistencia registrada para:
           - Username: ${this.username}

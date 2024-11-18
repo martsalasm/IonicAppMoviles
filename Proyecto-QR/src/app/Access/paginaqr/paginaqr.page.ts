@@ -15,9 +15,10 @@ export class PaginaqrPage implements OnInit {
   async ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
     const timestamp = navigation?.extras.state?.['timestamp'];
-
+    const nombreClase = navigation?.extras.state?.['nombreClase'];
+    
     if (timestamp) {
-      const data = `Asistencia registrada a las ${timestamp}`;
+      const data = `Asistencia registrada en la Clase de: ${nombreClase} a las ${timestamp}`;
       try {
         this.qrCodeData = await toDataURL(data, { errorCorrectionLevel: 'H' });
       } catch (err) {

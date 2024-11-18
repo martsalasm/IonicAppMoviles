@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClaseService } from 'src/app/services/clase.service';
-
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-seleccionar-clase',
   templateUrl: './seleccionar-clase.page.html',
@@ -29,9 +29,9 @@ export class SeleccionarClasePage implements OnInit {
   }
 
   // Seleccionar una clase y navegar a la página del QR
-  seleccionarClase(idClase: number) {
-    const timestamp = new Date().toISOString(); // Generar el timestamp
-    this.router.navigate(['/paginaqr'], { state: { idClase, timestamp } });
+  seleccionarClase(nombreClase: string) {
+    const timestamp = new Date().toLocaleString('es-CL', { timeZone: 'America/Santiago' }); // Obtiene la fecha y hora en la zona horaria de Chile
+    this.router.navigate(['/paginaqr'], { state: { nombreClase, timestamp } });
   }  
 
   // Redireccionar a la gestión de clases si no hay clases
