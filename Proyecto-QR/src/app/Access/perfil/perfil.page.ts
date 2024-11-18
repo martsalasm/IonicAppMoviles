@@ -103,11 +103,14 @@ export class PerfilComponent implements OnInit {
       console.error('Error al escanear el QR:', error);
     }
   }
-//ir a pagina qr
-  abrirPaginaQr() {
-    const timestamp = new Date().toISOString();
-    this.router.navigate(['/paginaqr'], { state: { timestamp } });
+  gestionarClases() {
+    this.router.navigate(['/gestion-clases']);
   }
+//registrar asistencia
+registrarAsistencia() {
+  this.router.navigate(['/seleccionar-clase']);
+}
+
   // Editar los datos del perfil
   editarDatos() {
     this.router.navigate(['/edit-profile'], {
@@ -128,3 +131,4 @@ export class PerfilComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 }
+

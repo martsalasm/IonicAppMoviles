@@ -26,9 +26,12 @@
   </span>
   <span *ngIf="tipoUsuario === 'Profesor'">
     <span *ngIf="tipoUsuario === 'Profesor'">
-      <ion-button expand="full" (click)="abrirPaginaQr()">Registrar asistencia alumnos</ion-button>
+      <ion-button expand="full" (click)="registrarAsistencia()">Registrar asistencia alumnos</ion-button>
     </span>
   </span>  
+  <ion-button expand="full" *ngIf="tipoUsuario === 'Profesor'" (click)="gestionarClases()">
+    Gestionar Clases
+  </ion-button>  
   <ion-button  expand="full" (click)="editarDatos()">Editar mis Datos</ion-button>
   <ion-button expand="full" (click)="logout()" color="danger">Cerrar Sesión</ion-button>
 </ion-content>

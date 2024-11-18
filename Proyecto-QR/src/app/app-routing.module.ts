@@ -45,6 +45,14 @@ const routes: Routes = [
     canActivate: [AuthGuard] // Aplica el AuthGuard para proteger la ruta
   },
   {
+    path: 'gestion-clases',
+    loadChildren: () => import('./Access/gestion-clases/gestion-clases.module').then( m => m.GestionClasesPageModule)
+  },
+  {
+    path: 'seleccionar-clase',
+    loadChildren: () => import('./Access/seleccionar-clase/seleccionar-clase.module').then( m => m.SeleccionarClasePageModule)
+  },
+  {
     path: '**',
     redirectTo: 'page-not-found'  // Redirige a la página 404
   },
