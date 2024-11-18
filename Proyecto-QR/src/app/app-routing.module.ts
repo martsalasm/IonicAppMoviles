@@ -46,11 +46,13 @@ const routes: Routes = [
   },
   {
     path: 'gestion-clases',
-    loadChildren: () => import('./Access/gestion-clases/gestion-clases.module').then( m => m.GestionClasesPageModule)
+    loadChildren: () => import('./Access/gestion-clases/gestion-clases.module').then( m => m.GestionClasesPageModule),
+    canActivate: [AuthGuard] // Aplica el AuthGuard para proteger la ruta
   },
   {
     path: 'seleccionar-clase',
-    loadChildren: () => import('./Access/seleccionar-clase/seleccionar-clase.module').then( m => m.SeleccionarClasePageModule)
+    loadChildren: () => import('./Access/seleccionar-clase/seleccionar-clase.module').then( m => m.SeleccionarClasePageModule),
+    canActivate: [AuthGuard] // Aplica el AuthGuard para proteger la ruta
   },
   {
     path: '**',
