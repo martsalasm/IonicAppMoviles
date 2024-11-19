@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Escanear QR</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="position: relative; width: 100%; height: 100%;">
+
+    <!-- Video de la cámara -->
+    <video #videoElement style="width: 100%; height: 100%; object-fit: cover;" autoplay></video>
+
+    <!-- Cuadro para escanear QR -->
+    <div style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; border: 2px dashed white; box-sizing: border-box;">
+      <p style="position: absolute; top: 20px; left: 20px; color: white; font-size: 1.5rem; z-index: 2;">Alinea el código QR aquí</p>
+    </div>
+
+  </div>
+</ion-content>

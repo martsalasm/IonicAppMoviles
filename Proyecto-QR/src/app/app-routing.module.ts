@@ -55,6 +55,10 @@ const routes: Routes = [
     canActivate: [AuthGuard] // Aplica el AuthGuard para proteger la ruta
   },
   {
+    path: 'scanner',
+    loadChildren: () => import('./Access/scanner/scanner.module').then( m => m.ScannerPageModule)
+  },
+  {
     path: '**',
     redirectTo: 'page-not-found'  // Redirige a la página 404
   },

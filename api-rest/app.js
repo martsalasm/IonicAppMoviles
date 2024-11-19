@@ -1,6 +1,9 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
+const fs = require("fs"); // Importar el módulo fs
+const https = require("https"); // Importar el módulo https
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -244,8 +247,12 @@ app.delete("/api/clases/:idClase", (req, res) => {
   });
 });
 
-
-// Iniciar el servidor
-app.listen(port, () => {
-  console.log(`Servidor escuchando en http://localhost:${port}`);
+// Cargar los archivos del certificado y clave privada
+const privateKey = fs.readFileSync("../ssl/server_nopass.key", "utf8");
+const certificate = fs.readFileSync("../ssl/server.crt", "utf8");
+// Configurar el servidor HTTPS
+const credentials = { key: privateKey, cert: certificate };
+// Iniciar el servidor HTTPS
+https.createServer(credentials, app).listen(port, () => {
+  console.log(`Servidor HTTPS escuchando en https://localhost:${port}`);
 });
