@@ -18,7 +18,7 @@ export class PaginaqrPage implements OnInit {
     const nombreClase = navigation?.extras.state?.['nombreClase'];
     
     if (timestamp) {
-      const data = `Asistencia registrada en la Clase: ${nombreClase} a las ${timestamp}`;
+      const data = `Asistencia registrada en la Clase: "${nombreClase}" QR generado a las ${timestamp}`;
       try {
         this.qrCodeData = await toDataURL(data, { errorCorrectionLevel: 'H' });
       } catch (err) {
