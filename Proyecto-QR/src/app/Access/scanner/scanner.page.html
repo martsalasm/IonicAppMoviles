@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
@@ -7,16 +7,20 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <div style="position: relative; width: 100%; height: 100%;">
+<ion-content style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center; height: 100%;">
+  <!-- Vista previa de la cámara -->
+  <div style="flex-grow: 1; display: flex; justify-content: center; align-items: center; width: 100%; position: relative;">
+    <!-- Aquí se manejará la vista de la cámara -->
+    <div id="scanner-container" style="position: absolute; width: 100%; height: 100%;"></div>
+  </div>
 
-    <!-- Video de la cámara -->
-    <video #videoElement style="width: 100%; height: 100%; object-fit: cover;" autoplay></video>
-
-    <!-- Cuadro para escanear QR -->
-    <div style="position: absolute; top: 30%; left: 10%; width: 80%; height: 40%; border: 2px dashed white; box-sizing: border-box;">
-      <p style="position: absolute; top: 20px; left: 20px; color: white; font-size: 1.5rem; z-index: 2;">Alinea el código QR aquí</p>
-    </div>
-
+  <!-- Contenedor de botones -->
+  <div style="margin-bottom: 20px; width: 100%; padding: 10px; display: flex; justify-content: center; flex-direction: column; align-items: center;">
+    <ion-button expand="block" color="primary" (click)="startScan()" [disabled]="isScanning" style="width: 200px; margin: 10px;">
+      {{ isScanning ? 'Escaneando...' : 'Iniciar Escaneo' }}
+    </ion-button>
+    <ion-button expand="block" color="danger" (click)="stopScan()" *ngIf="isScanning" style="width: 200px; margin: 10px;">
+      Detener Escaneo
+    </ion-button>
   </div>
 </ion-content>

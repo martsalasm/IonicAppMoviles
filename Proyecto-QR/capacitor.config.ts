@@ -7,6 +7,8 @@ const config: CapacitorConfig = {
   plugins: {
     BarcodeScanner: {
       enableOpacity: true, // Opcional: Deja la cámara visible mientras escaneas
+      enableTorch: false,
+      cameraDirection: 'back',
     },
     },
 };
