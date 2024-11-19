@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-
 // Función para capitalizar
 const capitalize = (str: string) => {
   if (!str) return str;
@@ -57,7 +56,15 @@ export class PerfilComponent implements OnInit {
 
   // Navegar al escáner de QR
   escaneoQR() {
-    this.router.navigate(['/scanner']);  // Redirige a la página de escaneo de QR
+    this.router.navigate(['/scanner'], {
+      state: {
+        user: {
+          username: this.username,
+          nombre: this.nombre,
+          apellido: this.apellido,
+        }
+      }
+    });  // Redirige a la página de escaneo de QR y pasa los datos del usuario
   }
 
   // Navegar a la gestión de clases

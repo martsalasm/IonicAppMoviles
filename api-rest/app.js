@@ -235,18 +235,26 @@ app.post("/api/clases", (req, res) => {
 app.delete("/api/clases/:idClase", (req, res) => {
   const { idClase } = req.params;
 
-  const sql = `DELETE FROM clases WHERE idClase = ?`;
-  db.run(sql, [idClase], function (err) {
+  const sqlDelete = `DELETE FROM clases WHERE idClase = ?`;
+  db.run(sqlDelete, [idClase], function (err) {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
     if (this.changes === 0) {
       return res.status(404).json({ message: "Clase no encontrada" });
     }
+
+    // Reiniciar el contador de autoincremento después de eliminar la clase
+    const sqlReset = `DELETE FROM sqlite_sequence WHERE name='clases'`;
+    db.run(sqlReset, function (err) {
+      if (err) {
+        return res.status(500).json({ error: 'Error al reiniciar el contador de autoincremento: ' + err.message });
+      }
+
     res.json({ message: `Clase con ID ${idClase} eliminada correctamente` });
   });
 });
-
+});
 // Cargar los archivos del certificado y clave privada
 const privateKey = fs.readFileSync("../ssl/server_nopass.key", "utf8");
 const certificate = fs.readFileSync("../ssl/server.crt", "utf8");
